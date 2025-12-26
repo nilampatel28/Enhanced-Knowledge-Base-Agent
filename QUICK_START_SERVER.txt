@@ -1,0 +1,58 @@
+╔════════════════════════════════════════════════════════════════╗
+║   ENHANCED KNOWLEDGE BASE AGENT - QUICK START                  ║
+║   Server Startup Fixed ✅                                      ║
+╚════════════════════════════════════════════════════════════════╝
+
+🚀 START THE SERVER (Pick One):
+
+  1. Using startup script (easiest):
+     chmod +x start_ui.sh
+     ./start_ui.sh
+
+  2. Using Python module:
+     python3 -m enhanced_kb_agent.web.server --host 127.0.0.1 --port 5000 --debug
+
+  3. Using Python script:
+     python3 enhanced_kb_agent/web/server.py --host 127.0.0.1 --port 5000 --debug
+
+🌐 OPEN IN BROWSER:
+   http://localhost:5000
+
+✅ VERIFY IT'S WORKING:
+   curl http://localhost:5000/api/health
+   (Should return: {"status": "ok"})
+
+📝 QUICK TEST:
+   1. Click "Store" tab
+   2. Enter: "Python is a programming language"
+   3. Title: "Python"
+   4. Click "Store Content"
+   5. You should see ✅ Success
+
+🔧 TROUBLESHOOTING:
+
+   Port already in use?
+   → Use different port: python3 -m enhanced_kb_agent.web.server --port 8000
+
+   Permission denied on start_ui.sh?
+   → chmod +x start_ui.sh
+
+   Connection refused?
+   → Make sure server is running in terminal
+
+   Module not found?
+   → Make sure you're in project root directory
+
+📚 DOCUMENTATION:
+   - FIXED_SERVER_STARTUP.md (detailed guide)
+   - START_HERE.md (overview)
+   - UI_ACCESS_GUIDE.md (features)
+   - UI_TESTING_GUIDE.md (testing)
+
+🎊 ENJOY!
+   The Enhanced Knowledge Base Agent is ready to use!
+
+═══════════════════════════════════════════════════════════════════
+Status: ✅ READY TO RUN
+Last Updated: December 27, 2025
+═══════════════════════════════════════════════════════════════════

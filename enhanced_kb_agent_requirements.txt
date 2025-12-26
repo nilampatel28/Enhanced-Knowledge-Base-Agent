@@ -1,0 +1,18 @@
+# Enhanced Knowledge Base Agent Requirements
+
+# Core dependencies
+boto3>=1.26.0
+botocore>=1.29.0
+
+# Testing dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+hypothesis>=6.70.0
+
+# Development dependencies
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+
+# Strands dependencies (if available)
+# strands>=0.1.0

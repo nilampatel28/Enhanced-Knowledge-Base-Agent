@@ -13,3 +13,6 @@ tqdm
 uv
 strands-agents[litellm]
 ddgs
+flask
+hypothesis
+pytest

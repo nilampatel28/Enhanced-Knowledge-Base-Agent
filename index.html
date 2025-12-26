@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Knowledge Base Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.8); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: slideInUp 0.8s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            animation: slideInDown 0.8s ease;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            animation: slideInDown 1s ease 0.2s both;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideInUp 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+            animation: glow 2s ease infinite;
+        }
+
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            animation: bounce 2s ease infinite;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 3px solid #e0e0e0;
+            background: white;
+            position: relative;
+        }
+
+        .tabs::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 20%;
+            transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 18px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-button:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+            animation: pulse 1s ease infinite;
+        }
+
+        .content {
+            padding: 40px;
+            min-height: 400px;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        .content h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            animation: slideInDown 0.6s ease;
+        }
+
+        .content > p {
+            animation: slideInDown 0.7s ease 0.1s both;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: slideInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: slideInUp 0.6s ease;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: #f8f9fa;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            transform: scale(1.02);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .message {
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 5px solid;
+            animation: slideInDown 0.5s ease;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border-left-color: #28a745;
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border-left-color: #dc3545;
+        }
+
+        .message.info {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            color: #0c5460;
+            border-left-color: #17a2b8;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+            margin-top: 25px;
+            display: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-box.show {
+            display: block;
+            animation: slideInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .result-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .result-box p {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .item-list {
+            list-style: none;
+        }
+
+        .item-list li {
+            padding: 15px;
+            background: white;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideInUp 0.5s ease;
+        }
+
+        .item-list li:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .item-list li strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 22px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideInUp 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #e0e0e0;
+            font-size: 0.95em;
+            animation: slideInUp 0.8s ease 0.4s both;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #28a745;
+            margin-right: 8px;
+            animation: pulse 2s ease infinite;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-button {
+                flex: 1 1 50%;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Enhanced Knowledge Base Agent</h1>
+            <p>Intelligent Information Management & Retrieval System</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number" id="itemCount">0</div>
+                <div class="label">Items Stored</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="tagCount">0</div>
+                <div class="label">Tags</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="categoryCount">0</div>
+                <div class="label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="queryCount">0</div>
+                <div class="label">Queries Executed</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('query')">🔍 Query</button>
+            <button class="tab-button" onclick="switchTab('store')">💾 Store</button>
+            <button class="tab-button" onclick="switchTab('search')">🔎 Search</button>
+            <button class="tab-button" onclick="switchTab('organize')">📁 Organize</button>
+            <button class="tab-button" onclick="switchTab('info')">ℹ️ Info</button>
+        </div>
+
+        <div class="content">
+            <!-- Query Tab -->
+            <div id="query" class="tab-content active">
+                <h2>Execute Query</h2>
+                <p style="color: #666; margin-bottom: 20px;">Ask complex questions about your knowledge base</p>
+                
+                <div class="message" id="queryMessage"></div>
+
+                <div class="form-group">
+                    <label for="queryInput">Your Question:</label>
+                    <textarea id="queryInput" placeholder="e.g., What is the relationship between Python and data science?"></textarea>
+                </div>
+
+                <button onclick="executeQuery()">Execute Query</button>
+
+                <div class="result-box" id="queryResult">
+                    <h3>Query Result</h3>
+                    <div id="queryResultContent"></div>
+                </div>
+            </div>
+
+            <!-- Store Tab -->
+            <div id="store" class="tab-content">
+                <h2>Store Information</h2>
+                <p style="color: #666; margin-bottom: 20px;">Add new content to your knowledge base</p>
+
+                <div class="message" id="storeMessage"></div>
+
+                <div class="form-group">
+                    <label for="contentTitle">Title:</label>
+                    <input type="text" id="contentTitle" placeholder="e.g., Python Programming">
+                </div>
+
+                <div class="form-group">
+                    <label for="contentText">Content:</label>
+                    <textarea id="contentText" placeholder="Enter the content you want to store..."></textarea>
+                </div>
+
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="contentTags">Tags (comma-separated):</label>
+                        <input type="text" id="contentTags" placeholder="e.g., programming, python, tutorial">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contentCategory">Category:</label>
+                        <input type="text" id="contentCategory" placeholder="e.g., Technology">
+                    </div>
+                </div>
+
+                <button onclick="storeContent()">Store Content</button>
+
+                <div class="result-box" id="storeResult">
+                    <h3>Stored Items</h3>
+                    <ul class="item-list" id="storedItems"></ul>
+                </div>
+            </div>
+
+            <!-- Search Tab -->
+            <div id="search" class="tab-content">
+                <h2>Search Knowledge Base</h2>
+                <p style="color: #666; margin-bottom: 20px;">Find information using full-text search</p>
+
+                <div class="message" id="searchMessage"></div>
+
+                <div class="form-group">
+                    <label for="searchQuery">Search Term:</label>
+                    <input type="text" id="searchQuery" placeholder="e.g., Python, data science, machine learning">
+                </div>
+
+                <button onclick="searchKnowledge()">Search</button>
+
+                <div class="result-box" id="searchResult">
+                    <h3>Search Results</h3>
+                    <div id="searchResultContent"></div>
+                </div>
+            </div>
+
+            <!-- Organize Tab -->
+            <div id="organize" class="tab-content">
+                <h2>Organize Knowledge</h2>
+                <p style="color: #666; margin-bottom: 20px;">Manage categories and tags</p>
+
+                <div class="message" id="organizeMessage"></div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Create New Category</h3>
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="newCategory">Category Name:</label>
+                        <input type="text" id="newCategory" placeholder="e.g., Technology">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryDesc">Description:</label>
+                        <input type="text" id="categoryDesc" placeholder="Brief description">
+                    </div>
+                </div>
+                <button onclick="createCategory()">Create Category</button>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">All Categories</h3>
+                <div class="grid" id="categoriesList"></div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">All Tags</h3>
+                <div id="tagsList"></div>
+            </div>
+
+            <!-- Info Tab -->
+            <div id="info" class="tab-content">
+                <h2>System Information</h2>
+                <p style="color: #666; margin-bottom: 20px;">View system status and statistics</p>
+
+                <div class="grid">
+                    <div class="card">
+                        <h4>🚀 System Status</h4>
+                        <p><span class="status-indicator"></span>Online & Ready</p>
+                    </div>
+                    <div class="card">
+                        <h4>📊 Version</h4>
+                        <p>1.0.0</p>
+                    </div>
+                    <div class="card">
+                        <h4>⚙️ Features</h4>
+                        <p>Query, Store, Search, Organize</p>
+                    </div>
+                    <div class="card">
+                        <h4>🔒 Security</h4>
+                        <p>Local Storage (Browser)</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Statistics</h3>
+                <div class="card">
+                    <p><strong>Total Items:</strong> <span id="infoItemCount">0</span></p>
+                    <p><strong>Total Tags:</strong> <span id="infoTagCount">0</span></p>
+                    <p><strong>Total Categories:</strong> <span id="infoCategoryCount">0</span></p>
+                    <p><strong>Queries Executed:</strong> <span id="infoQueryCount">0</span></p>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Actions</h3>
+                <button onclick="exportData()" style="margin-right: 10px;">📥 Export Data</button>
+                <button onclick="clearAllData()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🗑️ Clear All Data</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Enhanced Knowledge Base Agent v1.0.0</p>
+            <p>Created by <strong>Nilam Patel</strong> | © 2025</p>
+            <p>All data stored locally in your browser</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize data storage
+        let knowledgeBase = {
+            items: [],
+            categories: [],
+            tags: [],
+            queries: 0
+        };
+
+        // Load data from localStorage on page load
+        function loadData() {
+            const saved = localStorage.getItem('knowledgeBase');
+            if (saved) {
+                knowledgeBase = JSON.parse(saved);
+            }
+            updateStats();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('knowledgeBase', JSON.stringify(knowledgeBase));
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('itemCount').textContent = knowledgeBase.items.length;
+            document.getElementById('tagCount').textContent = new Set(knowledgeBase.items.flatMap(i => i.tags || [])).size;
+            document.getElementById('categoryCount').textContent = knowledgeBase.categories.length;
+            document.getElementById('queryCount').textContent = knowledgeBase.queries;
+
+            document.getElementById('infoItemCount').textContent = knowledgeBase.items.length;
+            document.getElementById('infoTagCount').textContent = new Set(knowledgeBase.items.flatMap(i => i.tags || [])).size;
+            document.getElementById('infoCategoryCount').textContent = knowledgeBase.categories.length;
+            document.getElementById('infoQueryCount').textContent = knowledgeBase.queries;
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'organize') {
+                displayCategories();
+                displayTags();
+            } else if (tabName === 'store') {
+                displayStoredItems();
+            }
+        }
+
+        // Show message
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `message ${type}`;
+            setTimeout(() => {
+                element.className = 'message';
+            }, 5000);
+        }
+
+        // Execute Query
+        function executeQuery() {
+            const query = document.getElementById('queryInput').value.trim();
+            if (!query) {
+                showMessage('queryMessage', 'Please enter a question', 'error');
+                return;
+            }
+
+            knowledgeBase.queries++;
+            saveData();
+
+            const results = knowledgeBase.items.filter(item => 
+                item.title.toLowerCase().includes(query.toLowerCase()) ||
+                item.content.toLowerCase().includes(query.toLowerCase())
+            );
+
+            let resultHTML = '';
+            if (results.length === 0) {
+                resultHTML = '<p>No matching items found. Try storing some content first!</p>';
+            } else {
+                resultHTML = `<p><strong>Found ${results.length} matching item(s):</strong></p>`;
+                results.forEach(item => {
+                    resultHTML += `
+                        <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #667eea;">
+                            <h4>${item.title}</h4>
+                            <p>${item.content.substring(0, 200)}...</p>
+                            <div>${item.tags.map(tag => `<span class="badge">${tag}</span>`).join('')}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('queryResultContent').innerHTML = resultHTML;
+            document.getElementById('queryResult').classList.add('show');
+            showMessage('queryMessage', 'Query executed successfully!', 'success');
+        }
+
+        // Store Content
+        function storeContent() {
+            const title = document.getElementById('contentTitle').value.trim();
+            const content = document.getElementById('contentText').value.trim();
+            const tags = document.getElementById('contentTags').value.split(',').map(t => t.trim()).filter(t => t);
+            const category = document.getElementById('contentCategory').value.trim();
+
+            if (!title || !content) {
+                showMessage('storeMessage', 'Please fill in title and content', 'error');
+                return;
+            }
+
+            const item = {
+                id: Date.now(),
+                title,
+                content,
+                tags,
+                category,
+                timestamp: new Date().toLocaleString()
+            };
+
+            knowledgeBase.items.push(item);
+            if (category && !knowledgeBase.categories.find(c => c.name === category)) {
+                knowledgeBase.categories.push({ name: category, description: '' });
+            }
+            saveData();
+
+            document.getElementById('contentTitle').value = '';
+            document.getElementById('contentText').value = '';
+            document.getElementById('contentTags').value = '';
+            document.getElementById('contentCategory').value = '';
+
+            displayStoredItems();
+            showMessage('storeMessage', 'Content stored successfully!', 'success');
+        }
+
+        // Display Stored Items
+        function displayStoredItems() {
+            const list = document.getElementById('storedItems');
+            list.innerHTML = '';
+
+            if (knowledgeBase.items.length === 0) {
+                list.innerHTML = '<li style="border-left: none; background: white; color: #999;">No items stored yet</li>';
+                document.getElementById('storeResult').classList.remove('show');
+                return;
+            }
+
+            document.getElementById('storeResult').classList.add('show');
+            knowledgeBase.items.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>${item.title}</strong><br>
+                    <small style="color: #999;">${item.timestamp}</small><br>
+                    <small>${item.content.substring(0, 100)}...</small>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // Search Knowledge
+        function searchKnowledge() {
+            const searchTerm = document.getElementById('searchQuery').value.trim().toLowerCase();
+            if (!searchTerm) {
+                showMessage('searchMessage', 'Please enter a search term', 'error');
+                return;
+            }
+
+            const results = knowledgeBase.items.filter(item =>
+                item.title.toLowerCase().includes(searchTerm) ||
+                item.content.toLowerCase().includes(searchTerm) ||
+                item.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+            );
+
+            let resultHTML = '';
+            if (results.length === 0) {
+                resultHTML = '<p>No results found for your search.</p>';
+            } else {
+                resultHTML = `<p><strong>Found ${results.length} result(s):</strong></p>`;
+                results.forEach(item => {
+                    resultHTML += `
+                        <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #667eea;">
+                            <h4>${item.title}</h4>
+                            <p>${item.content.substring(0, 200)}...</p>
+                            <div>${item.tags.map(tag => `<span class="badge">${tag}</span>`).join('')}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('searchResultContent').innerHTML = resultHTML;
+            document.getElementById('searchResult').classList.add('show');
+            showMessage('searchMessage', 'Search completed!', 'success');
+        }
+
+        // Create Category
+        function createCategory() {
+            const name = document.getElementById('newCategory').value.trim();
+            const description = document.getElementById('categoryDesc').value.trim();
+
+            if (!name) {
+                showMessage('organizeMessage', 'Please enter a category name', 'error');
+                return;
+            }
+
+            if (knowledgeBase.categories.find(c => c.name === name)) {
+                showMessage('organizeMessage', 'Category already exists', 'error');
+                return;
+            }
+
+            knowledgeBase.categories.push({ name, description });
+            saveData();
+
+            document.getElementById('newCategory').value = '';
+            document.getElementById('categoryDesc').value = '';
+
+            displayCategories();
+            showMessage('organizeMessage', 'Category created successfully!', 'success');
+        }
+
+        // Display Categories
+        function displayCategories() {
+            const list = document.getElementById('categoriesList');
+            list.innerHTML = '';
+
+            if (knowledgeBase.categories.length === 0) {
+                list.innerHTML = '<p style="color: #999;">No categories yet</p>';
+                return;
+            }
+
+            knowledgeBase.categories.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h4>${cat.name}</h4>
+                    <p>${cat.description || 'No description'}</p>
+                    <small style="color: #999;">${knowledgeBase.items.filter(i => i.category === cat.name).length} items</small>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        // Display Tags
+        function displayTags() {
+            const list = document.getElementById('tagsList');
+            const allTags = new Set(knowledgeBase.items.flatMap(i => i.tags || []));
+
+            if (allTags.size === 0) {
+                list.innerHTML = '<p style="color: #999;">No tags yet</p>';
+                return;
+            }
+
+            let tagsHTML = '';
+            allTags.forEach(tag => {
+                const count = knowledgeBase.items.filter(i => i.tags.includes(tag)).length;
+                tagsHTML += `<span class="badge">${tag} (${count})</span>`;
+            });
+            list.innerHTML = tagsHTML;
+        }
+
+        // Export Data
+        function exportData() {
+            const dataStr = JSON.stringify(knowledgeBase, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `knowledge-base-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            showMessage('organizeMessage', 'Data exported successfully!', 'success');
+        }
+
+        // Clear All Data
+        function clearAllData() {
+            if (confirm('Are you sure you want to delete all data? This cannot be undone.')) {
+                knowledgeBase = { items: [], categories: [], tags: [], queries: 0 };
+                saveData();
+                showMessage('organizeMessage', 'All data cleared!', 'success');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', loadData);
+    </script>
+</body>
+</html>

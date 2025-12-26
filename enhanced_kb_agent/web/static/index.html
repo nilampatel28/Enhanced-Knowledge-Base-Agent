@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Knowledge Base Agent</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <i class="fas fa-brain"></i>
+                    <div>
+                        <h1>Enhanced Knowledge Base Agent</h1>
+                        <p class="subtitle">Intelligent Information Management System</p>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="total-items">0</span>
+                        <span class="stat-label">Items</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="total-tags">0</span>
+                        <span class="stat-label">Tags</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="total-categories">0</span>
+                        <span class="stat-label">Categories</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="query">
+                <i class="fas fa-search"></i> Query
+            </button>
+            <button class="tab-button" data-tab="store">
+                <i class="fas fa-save"></i> Store
+            </button>
+            <button class="tab-button" data-tab="search">
+                <i class="fas fa-filter"></i> Search
+            </button>
+            <button class="tab-button" data-tab="organize">
+                <i class="fas fa-folder-tree"></i> Organize
+            </button>
+            <button class="tab-button" data-tab="info">
+                <i class="fas fa-info-circle"></i> Info
+            </button>
+        </nav>
+
+        <!-- Query Tab -->
+        <div id="query" class="tab-content active">
+            <h2>Complex Query Interface</h2>
+            <div class="form-group">
+                <label for="query-input">Enter your query:</label>
+                <textarea id="query-input" placeholder="Ask a complex question..." rows="4"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="executeQuery()">Execute Query</button>
+            
+            <div id="query-results" class="results-container" style="display:none;">
+                <h3>Query Results</h3>
+                <div id="query-answer" class="answer-box"></div>
+                <div id="query-reasoning" class="reasoning-box"></div>
+                <div id="query-sources" class="sources-box"></div>
+            </div>
+        </div>
+
+        <!-- Store Tab -->
+        <div id="store" class="tab-content">
+            <h2>Store Information</h2>
+            <div class="form-group">
+                <label for="store-content">Content:</label>
+                <textarea id="store-content" placeholder="Enter content to store..." rows="6"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="store-title">Title:</label>
+                <input type="text" id="store-title" placeholder="Content title">
+            </div>
+            
+            <div class="form-group">
+                <label for="store-description">Description:</label>
+                <textarea id="store-description" placeholder="Content description..." rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="store-tags">Tags (comma-separated):</label>
+                <input type="text" id="store-tags" placeholder="tag1, tag2, tag3">
+            </div>
+            
+            <div class="form-group">
+                <label for="store-categories">Categories (comma-separated):</label>
+                <input type="text" id="store-categories" placeholder="category1, category2">
+            </div>
+            
+            <button class="btn btn-primary" onclick="storeContent()">Store Content</button>
+            
+            <div id="store-result" class="result-message" style="display:none;"></div>
+        </div>
+
+        <!-- Search Tab -->
+        <div id="search" class="tab-content">
+            <h2>Search & Filter</h2>
+            
+            <div class="search-section">
+                <h3>Search by Query</h3>
+                <div class="form-group">
+                    <input type="text" id="search-query" placeholder="Enter search query...">
+                    <button class="btn btn-secondary" onclick="searchByQuery()">Search</button>
+                </div>
+            </div>
+            
+            <div class="search-section">
+                <h3>Filter by Tags</h3>
+                <div id="tags-list" class="tags-container"></div>
+                <button class="btn btn-secondary" onclick="loadTags()">Load Tags</button>
+            </div>
+            
+            <div class="search-section">
+                <h3>Filter by Categories</h3>
+                <div id="categories-list" class="categories-container"></div>
+                <button class="btn btn-secondary" onclick="loadCategories()">Load Categories</button>
+            </div>
+            
+            <div id="search-results" class="results-container" style="display:none;">
+                <h3>Search Results</h3>
+                <div id="search-items" class="search-items"></div>
+            </div>
+        </div>
+
+        <!-- Organize Tab -->
+        <div id="organize" class="tab-content">
+            <h2><i class="fas fa-folder-tree"></i> Knowledge Organization</h2>
+            
+            <div class="organize-section">
+                <h3><i class="fas fa-plus-circle"></i> Create Category</h3>
+                <div class="form-group">
+                    <input type="text" id="category-name" placeholder="Category name">
+                </div>
+                <div class="form-group">
+                    <textarea id="category-description" placeholder="Category description..." rows="2"></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="createCategory()">
+                    <i class="fas fa-plus"></i> Create Category
+                </button>
+            </div>
+            
+            <div class="organize-section">
+                <h3><i class="fas fa-list"></i> Categories</h3>
+                <div id="categories-display" class="categories-display"></div>
+                <button class="btn btn-secondary" onclick="loadCategoriesDisplay()">
+                    <i class="fas fa-sync"></i> Refresh Categories
+                </button>
+            </div>
+            
+            <div class="organize-section">
+                <h3><i class="fas fa-tags"></i> Tags</h3>
+                <div id="tags-display" class="tags-display"></div>
+                <button class="btn btn-secondary" onclick="loadTagsDisplay()">
+                    <i class="fas fa-sync"></i> Refresh Tags
+                </button>
+            </div>
+        </div>
+
+        <!-- Info Tab -->
+        <div id="info" class="tab-content">
+            <h2><i class="fas fa-info-circle"></i> System Information</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-cogs"></i> API Status</h3>
+                    <div id="api-status" class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Checking...</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-database"></i> Storage</h3>
+                    <div id="storage-info">
+                        <p>Total Items: <strong id="storage-items">0</strong></p>
+                        <p>Total Tags: <strong id="storage-tags">0</strong></p>
+                        <p>Total Categories: <strong id="storage-categories">0</strong></p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-rocket"></i> Features</h3>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Multi-Step Reasoning</li>
+                        <li><i class="fas fa-check"></i> Information Versioning</li>
+                        <li><i class="fas fa-check"></i> Multi-Modal Storage</li>
+                        <li><i class="fas fa-check"></i> Knowledge Organization</li>
+                        <li><i class="fas fa-check"></i> Conflict Resolution</li>
+                        <li><i class="fas fa-check"></i> Performance Optimization</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-book"></i> Documentation</h3>
+                    <p>For more information, visit the <a href="/api" target="_blank">API Documentation</a></p>
+                    <p>Check the <a href="https://github.com" target="_blank">GitHub Repository</a> for source code</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Enhanced Knowledge Base Agent. All rights reserved.</p>
+        <p>Status: <span id="footer-status" class="status-online">Online</span></p>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
