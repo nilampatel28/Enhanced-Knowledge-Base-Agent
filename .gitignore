@@ -58,4 +58,10 @@ external_api_examples/
 mcp_examples/
 guardrails/
 streamlit_examples/
-agentcore/
+
+# AgentCore (keep deployment scripts, ignore runtime artifacts)
+agentcore/.bedrock_agentcore.yaml
+agentcore/Dockerfile
+agentcore/.dockerignore
+agentcore/runtime/enhanced_kb_agent/
+agentcore/runtime/tests/
